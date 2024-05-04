@@ -1,13 +1,11 @@
-import uvicorn
+from pathlib import Path
+
 from fastapi import FastAPI
 from starlette.staticfiles import StaticFiles
-from routers import pages_router
+
+from routers import dobrotsen_router
 
 app = FastAPI()
 
-app.mount("/static", StaticFiles(directory=f"static"), name="static")
-app.include_router(pages_router, tags=["page"])
-
-
-if __name__ == "__main__":
-    uvicorn.run("main:app", port=5000)
+app.mount("/static", StaticFiles(directory=Path(__file__).parent.absolute() / "static"), name="static")
+app.include_router(dobrotsen_router, tags=["page"])

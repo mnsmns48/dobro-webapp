@@ -1,0 +1,13 @@
+.btn btn-dark btn-circle {
+    display: inline-block;
+    width: 182px;
+    height: 40px;
+}
+
+.main-contain {
+    display: inline-block;
+}
+
+.img {
+    border-radius: 50%;
+}

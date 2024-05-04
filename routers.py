@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from fastapi import APIRouter, Request, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.templating import Jinja2Templates
@@ -7,14 +6,13 @@ from starlette.templating import Jinja2Templates
 from config import dobro_engine
 from crud import main_menu, walking_menu
 
-pages_router = APIRouter()
+dobrotsen_router = APIRouter()
 templates = Jinja2Templates(directory="templates")
-
 current = datetime.now()
 date = current.strftime("%d.%m.%Y")
 
 
-@pages_router.get("/", response_model=None)
+@dobrotsen_router.get("/", response_model=None)
 async def get_main(
         request: Request,
         session: AsyncSession = Depends(dobro_engine.session_dependency)
@@ -27,7 +25,7 @@ async def get_main(
     )
 
 
-@pages_router.get("/{parent}")
+@dobrotsen_router.get("/{parent}")
 async def get_page_parent(
         parent: int,
         request: Request,
