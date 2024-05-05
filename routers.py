@@ -8,8 +8,6 @@ from crud import main_menu, walking_menu
 
 dobrotsen_router = APIRouter()
 templates = Jinja2Templates(directory="templates")
-current = datetime.now()
-date = current.strftime("%d.%m.%Y")
 
 
 @dobrotsen_router.get("/", response_model=None)
@@ -18,7 +16,7 @@ async def get_main(
         session: AsyncSession = Depends(dobro_engine.session_dependency)
 ):
     data = await main_menu(session=session, parent=0)
-    context = {'request': request, 'data': data.get('data'), 'date': date}
+    context = {'request': request, 'data': data.get('data'), 'date': datetime.now().strftime("%d.%m.%Y")}
     return templates.TemplateResponse(
         name="menu.html",
         context=context
@@ -34,11 +32,17 @@ async def get_page_parent(
 ):
     data = await walking_menu(session=session, parent=parent)
     if data.get('end'):
-        context = {"request": request, "data": data.get('data'), "parent": data.get('parent'), 'date': date}
+        context = {"request": request,
+                   "data": data.get('data'),
+                   "parent": data.get('parent'),
+                   'date': datetime.now().strftime("%d.%m.%Y")}
         return templates.TemplateResponse(name="products.html", context=context)
     else:
         if data.get('data'):
-            context = {"request": request, "data": data.get('data'), "parent": data.get('parent'), 'date': date}
+            context = {"request": request,
+                       "data": data.get('data'),
+                       "parent": data.get('parent'),
+                       'date': datetime.now().strftime("%d.%m.%Y")}
             return templates.TemplateResponse(name="menu.html", context=context)
         else:
             context = {"request": request}
